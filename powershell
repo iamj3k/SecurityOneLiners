@@ -1,0 +1,2 @@
+# Prints WLAN profiles and passwords in clear text
+Foreach($i in (((netsh wlan show profiles).split(":")|findstr -v "All User"|findstr -v "\-\-\-\-"|findstr -v "Group policy") -replace "\s+", " ")| ? {$_.trim() -ne "" }){$name=$i;$key=(powershell "netsh wlan show profile name=$($i) key=clear"|findstr "Key");echo $($i)$($key)}
